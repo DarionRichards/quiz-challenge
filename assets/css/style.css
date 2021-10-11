@@ -3,6 +3,12 @@
     --clr-btn-color: #7209b7;
     --clr-btn-hover: #af5be7;
     --clr-btn-text: #f9fbfd;
+    --clr-alert-success-background: #d1e7dd;
+    --clr-alert-success-text: #0a9396;
+    --clr-alert-success-border: #badbcc;
+    --clr-alert-failure-background: #f8d7da;
+    --clr-alert-failure-text: #842029;
+    --clr-alert-failure-border: #f5c2c7;
 }
 
 body {
@@ -68,6 +74,25 @@ body {
     transition-duration: 0.2s;
     background-color: var(--clr-btn-hover);
     cursor: pointer;
+}
+
+.answer-alert {
+    position: relative;
+    padding: 1rem 1rem;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+
+.answer-alert-success {
+    color: var(--clr-alert-success-text);
+    background-color: var(--clr-alert-success-background);
+    border-color: var(--clr-alert-success-border);
+}
+
+.answer-alert-failure {
+    color: var(--clr-alert-failure-text);
+    background-color: var(--clr-alert-failure-background);
+    border-color: var(--clr-alert-failure-border);
 }
 
 @media screen and (max-width: 400px) {
