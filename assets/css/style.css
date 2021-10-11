@@ -29,12 +29,14 @@ body {
 }
 
 .highscores,
+.home,
 .timer {
     font-size: 1.2rem;
     padding: 1rem;
 }
 
 .highscores a,
+.home a,
 .timer {
     text-decoration: none;
     color: var(--clr-btn-text);
@@ -101,6 +103,16 @@ body {
     border-color: var(--clr-alert-failure-border);
 }
 
+.score-form-container {
+    background-color: var(--clr-btn-color);
+}
+
+.score {
+    color: var(--clr-btn-text);
+    font-size: 1.3rem;
+    margin: 0 0 1rem 0;
+}
+
 .form-container {
     display: flex;
     flex-direction: column;
@@ -114,6 +126,22 @@ body {
 .form-container input {
     border: var(--clr-btn-color) solid 1px;
     padding: 0.5rem 2rem;
+}
+
+.submit-btn {
+    padding: 5px 20px;
+    background-color: var(--clr-btn-text);
+    color: var(--clr-btn-color);
+    text-align: left;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.submit-btn:hover {
+    color: var(--clr-btn-text);
+    transition-duration: 0.2s;
+    background-color: var(--clr-btn-hover);
+    cursor: pointer;
 }
 
 @media screen and (max-width: 470px) {
