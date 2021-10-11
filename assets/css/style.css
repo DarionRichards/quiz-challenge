@@ -1,0 +1,40 @@
+:root {
+    --clr-background: #f9fbfd;
+    --clr-btn-color: #7209b7;
+    --clr-btn-hover: #a63cec;
+    --clr-btn-text: #f9fbfd;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif, sans-serif;
+    background-color: var(--clr-background);
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 1rem;
+    background-color: var(--clr-btn-color);
+}
+
+.highscores,
+.timer {
+    font-size: 1.2rem;
+    padding: 1rem;
+}
+
+.highscores a,
+.timer {
+    text-decoration: none;
+    color: var(--clr-btn-text);
+}
+
+@media all and (max-width: 320px) {
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+    }
+}
