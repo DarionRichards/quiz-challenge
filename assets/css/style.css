@@ -42,7 +42,7 @@ body {
 
 .container {
     margin: 0rem 2rem;
-    padding: 3rem 3rem;
+    padding: 3rem 5rem;
 }
 
 .container h1 {
@@ -53,6 +53,7 @@ body {
 .start-container p {
     font-size: 1rem;
     margin: 0 0 1rem 0;
+    padding: 0 2rem;
 }
 
 .question {
@@ -115,7 +116,7 @@ body {
     padding: 0.5rem 2rem;
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 470px) {
     .header {
         display: flex;
         flex-direction: column;
@@ -124,12 +125,17 @@ body {
     }
     .container {
         margin: 0rem 2rem;
-        padding: 3rem 1rem;
+        padding: 3rem 0rem;
     }
     .container h1 {
         font-size: 1.4rem;
         margin: 0 0 1rem 0;
         text-align: center;
+    }
+    .start-container p {
+        font-size: 1rem;
+        margin: 0 0 1rem 0;
+        padding: 0 2rem;
     }
     .btn-container {
         display: flex;
