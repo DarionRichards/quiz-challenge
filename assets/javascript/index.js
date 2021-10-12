@@ -1,3 +1,9 @@
+const startBtn = document.getElementById('start-btn');
+const answerContainer = document.getElementById('answer-container');
+
+let shuffledQuestion = ""
+let currentQuestionIndex = ""
+
 const questions = [{
         question: "Commonly used data types DO NOT include:",
         answers: ["1. Strings", "2. Booleans", "3. Alerts", "4. Numbers"],
@@ -22,6 +28,8 @@ const questions = [{
 
 const startQuiz = function() {
     console.log("quiz started")
+    shuffledQuestion = questions.sort(() => Math.random() - 0.5)
+    currentQuestionIndex = 0
     removeStartContainer();
     renderQuestion();
 };
@@ -35,10 +43,12 @@ const constructAnswers = function(answers) {
 
     const answerContainer = document.createElement('div');
     answerContainer.setAttribute('class', 'answer-container');
+    answerContainer.setAttribute('id', 'answer-container');
 
     answers.forEach(answer => {
         const answerButton = document.createElement('button');
         answerButton.setAttribute('class', 'btn');
+        answerButton.setAttribute('name', 'answer');
         answerButton.textContent = answer;
         answerContainer.appendChild(answerButton);
     })
@@ -46,10 +56,21 @@ const constructAnswers = function(answers) {
     return answerContainer;
 };
 
+const verifyAnswer = function(event) {
+    // target is button being clicked
+    const target = event.target
+
+    if (target.getAttribute('name') === 'answer') {
+        currentQuestionIndex++
+        renderQuestion();
+    }
+};
+
 const constructNextQuestion = function(questions) {
 
     const questionContainer = document.createElement('section');
     questionContainer.setAttribute('class', 'container');
+    questionContainer.setAttribute('id', 'question-container');
 
     const questionTitle = document.createElement('h2');
     questionTitle.setAttribute('class', 'question');
@@ -59,13 +80,21 @@ const constructNextQuestion = function(questions) {
 
     questionContainer.append(questionTitle, answerContainer);
 
+    questionContainer.addEventListener('click', verifyAnswer);
+
     return questionContainer;
 }
 
+const resetQuestion = function() {
+    const questionContainer = document.getElementById('question-container');
+    // questionContainer.remove();
+
+};
+
 const renderQuestion = function() {
 
-    const shuffledQuestion = questions.sort(() => Math.random() - 0.5)
-    const currentQuestionIndex = 0
+
+    resetQuestion();
 
     const questionContainer = constructNextQuestion(shuffledQuestion[currentQuestionIndex]);
 
@@ -75,6 +104,4 @@ const renderQuestion = function() {
 
 };
 
-const startBtn = document.getElementById('start-btn');
-
-startBtn.addEventListener('click', startQuiz)
+startBtn.addEventListener('click', startQuiz);
