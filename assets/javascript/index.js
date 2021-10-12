@@ -62,6 +62,7 @@ const verifyAnswer = function(event) {
 
     if (target.getAttribute('name') === 'answer') {
         currentQuestionIndex++
+        resetQuestion();
         renderQuestion();
     }
 };
@@ -87,14 +88,10 @@ const constructNextQuestion = function(questions) {
 
 const resetQuestion = function() {
     const questionContainer = document.getElementById('question-container');
-    // questionContainer.remove();
-
+    questionContainer.remove();
 };
 
 const renderQuestion = function() {
-
-
-    resetQuestion();
 
     const questionContainer = constructNextQuestion(shuffledQuestion[currentQuestionIndex]);
 
