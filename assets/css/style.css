@@ -126,6 +126,7 @@ body {
 .form-container input {
     border: var(--clr-btn-color) solid 1px;
     padding: 0.5rem 2rem;
+    width: 100%;
 }
 
 .submit-btn {
@@ -180,5 +181,8 @@ body {
     }
     .question {
         text-align: center;
+    }
+    .score-form-container {
+        padding: 2rem 2rem;
     }
 }
