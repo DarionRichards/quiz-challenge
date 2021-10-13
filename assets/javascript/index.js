@@ -85,6 +85,12 @@ const constructWrongAlert = function() {
     wrongAlert.setAttribute('class', 'container answer-alert answer-alert-failure');
     wrongAlert.textContent = "Oops, you are incorrect!!";
     mainContainer.append(wrongAlert);
+
+    const waitRemove = function() {
+        wrongAlert.remove()
+    }
+
+    const delay = setTimeout(waitRemove, 1000)
 };
 
 const constructCorrectAlert = function() {
@@ -92,6 +98,12 @@ const constructCorrectAlert = function() {
     correctAlert.setAttribute('class', 'container answer-alert answer-alert-success');
     correctAlert.textContent = "Congratulations, you are correct!!";
     mainContainer.append(correctAlert);
+
+    const waitRemove = function() {
+        correctAlert.remove()
+    }
+
+    const delay = setTimeout(waitRemove, 1000)
 };
 
 const renderQuestion = function() {
@@ -112,6 +124,7 @@ const startTimer = function() {
             document.getElementById('countdown').textContent = count--;
         } else {
             clearInterval(timer)
+            console.log('show form')
         }
     }
     const timer = setInterval(timerTick, 1000)
@@ -128,7 +141,6 @@ const verifyAnswer = function(event) {
         const correctOption = currentTarget.getAttribute('data-answer');
 
         if (userOption !== correctOption) {
-            // construct wrong alert
             constructWrongAlert();
             count -= 5;
 
