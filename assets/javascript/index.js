@@ -25,8 +25,7 @@ const questions = [{
     }
 ];
 
-let count = 3
-    // questions.length * 10;
+let count = questions.length * 7;
 
 const startQuiz = function() {
     console.log("quiz started")
@@ -58,6 +57,7 @@ const constructNextQuestion = function(questions) {
 
     questionContainer.addEventListener('click', verifyAnswer);
 
+
     return questionContainer;
 }
 
@@ -80,24 +80,25 @@ const constructAnswers = function(answers) {
 
 const renderQuestion = function() {
 
-    const questionContainer = constructNextQuestion(shuffledQuestion[currentQuestionIndex]);
 
-    const mainContainer = document.getElementById('main-section');
+    if (currentQuestionIndex < questions.length) {
 
-    mainContainer.append(questionContainer);
+        const questionContainer = constructNextQuestion(shuffledQuestion[currentQuestionIndex]);
 
+        const mainContainer = document.getElementById('main-section');
+
+        mainContainer.append(questionContainer);
+    } else {
+        console.log('game over');
+    }
 };
 
 const startTimer = function() {
 
     const timerTick = function() {
-        console.log("tick")
-            // check if countdown has reached 0
         if (count >= 0) {
             document.getElementById('countdown').textContent = count--;
         } else {
-            // render game-over
-            console.log('game over');
             clearInterval(timer)
         }
     }
@@ -112,6 +113,7 @@ const verifyAnswer = function(event) {
         currentQuestionIndex++
         resetQuestion();
         renderQuestion();
+        console.log(target)
     }
 };
 
