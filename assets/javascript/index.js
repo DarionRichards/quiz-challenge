@@ -112,19 +112,17 @@ const renderQuestion = function() {
 
         const questionContainer = constructNextQuestion(shuffledQuestion[currentQuestionIndex]);
         mainContainer.append(questionContainer);
-    } else {
-        console.log('load form');
     }
 };
 
 const startTimer = function() {
 
     const timerTick = function() {
-        if (count >= 0) {
+        if (count >= 0 && currentQuestionIndex < questions.length) {
             document.getElementById('countdown').textContent = count--;
         } else {
             clearInterval(timer)
-            console.log('show form')
+            renderForm();
         }
     }
     const timer = setInterval(timerTick, 1000)
@@ -156,6 +154,52 @@ const verifyAnswer = function(event) {
 const resetQuestion = function() {
     const questionContainer = document.getElementById('question-container');
     questionContainer.remove();
+};
+
+const constructForm = function() {
+
+    const formSection = document.createElement('section');
+    formSection.setAttribute('class', 'container centre-text');
+
+    const scoreFormContainer = document.createElement('form');
+    scoreFormContainer.setAttribute('class', 'score-form-container');
+
+    const formHeader = document.createElement('h2');
+    formHeader.setAttribute('class', 'score');
+    formHeader.textContent = `Your score is: `;
+
+    const formContainer = document.createElement('div');
+    formContainer.setAttribute('class', 'form-container');
+
+    const formInputItem = document.createElement('div');
+    formInputItem.setAttribute('class', 'form-item');
+
+    const formInput = document.createElement('input');
+    formInput.setAttribute('class', 'centre-text');
+    formInput.setAttribute('placeholder', 'Enter your initials!');
+
+    const formButtonItem = document.createElement('div');
+    formButtonItem.setAttribute('class', 'form-item');
+
+    const formButton = document.createElement('button');
+    formButton.setAttribute('class', 'submit-btn');
+    formButton.setAttribute('id', 'submit');
+    formButton.textContent = "Submit";
+
+
+    formSection.append(scoreFormContainer);
+    scoreFormContainer.append(formHeader, formContainer);
+    formContainer.append(formInputItem, formButtonItem);
+    formInputItem.append(formInput);
+    formButtonItem.append(formButton);
+
+    return formSection;
+};
+
+const renderForm = function() {
+
+    const form = constructForm();
+    mainContainer.append(form);
 };
 
 startBtn.addEventListener('click', startQuiz);
