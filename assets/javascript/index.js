@@ -1,4 +1,5 @@
 const startBtn = document.getElementById('start-btn');
+const mainContainer = document.getElementById('main-section');
 
 let shuffledQuestion = "";
 let currentQuestionIndex = "";
@@ -21,7 +22,7 @@ const questions = [{
     {
         question: "String values must be enclosed within ____ when being assigned to variables.",
         answers: ["1. Commas", "2. Curly brackets", "3. Quotes", "4. Parenthesis"],
-        correctAnswer: "4. Quotes"
+        correctAnswer: "3. Quotes"
     }
 ];
 
@@ -46,6 +47,7 @@ const constructNextQuestion = function(questions) {
     const questionContainer = document.createElement('section');
     questionContainer.setAttribute('class', 'container');
     questionContainer.setAttribute('id', 'question-container');
+    questionContainer.setAttribute('data-answer', questions.correctAnswer)
 
     const questionTitle = document.createElement('h2');
     questionTitle.setAttribute('class', 'question');
@@ -56,7 +58,6 @@ const constructNextQuestion = function(questions) {
     questionContainer.append(questionTitle, answerContainer);
 
     questionContainer.addEventListener('click', verifyAnswer);
-
 
     return questionContainer;
 }
@@ -71,6 +72,7 @@ const constructAnswers = function(answers) {
         const answerButton = document.createElement('button');
         answerButton.setAttribute('class', 'btn');
         answerButton.setAttribute('name', 'answer');
+        answerButton.setAttribute('data-option', answer);
         answerButton.textContent = answer;
         answerContainer.appendChild(answerButton);
     })
@@ -78,18 +80,28 @@ const constructAnswers = function(answers) {
     return answerContainer;
 };
 
-const renderQuestion = function() {
+const constructWrongAlert = function() {
+    const wrongAlert = document.createElement('section');
+    wrongAlert.setAttribute('class', 'container answer-alert answer-alert-failure');
+    wrongAlert.textContent = "Oops, you are incorrect!!";
+    mainContainer.append(wrongAlert);
+};
 
+const constructCorrectAlert = function() {
+    const correctAlert = document.createElement('section');
+    correctAlert.setAttribute('class', 'container answer-alert answer-alert-success');
+    correctAlert.textContent = "Congratulations, you are correct!!";
+    mainContainer.append(correctAlert);
+};
+
+const renderQuestion = function() {
 
     if (currentQuestionIndex < questions.length) {
 
         const questionContainer = constructNextQuestion(shuffledQuestion[currentQuestionIndex]);
-
-        const mainContainer = document.getElementById('main-section');
-
         mainContainer.append(questionContainer);
     } else {
-        console.log('game over');
+        console.log('load form');
     }
 };
 
@@ -107,13 +119,25 @@ const startTimer = function() {
 
 const verifyAnswer = function(event) {
     // target is button being clicked
-    const target = event.target
+    const target = event.target;
+    const currentTarget = event.currentTarget;
 
     if (target.getAttribute('name') === 'answer') {
-        currentQuestionIndex++
+
+        const userOption = target.getAttribute('data-option');
+        const correctOption = currentTarget.getAttribute('data-answer');
+
+        if (userOption !== correctOption) {
+            // construct wrong alert
+            constructWrongAlert();
+            count -= 5;
+
+        } else {
+            constructCorrectAlert();
+        };
+        currentQuestionIndex++;
         resetQuestion();
         renderQuestion();
-        console.log(target)
     }
 };
 
