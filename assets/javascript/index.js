@@ -1,8 +1,7 @@
 const startBtn = document.getElementById('start-btn');
-const answerContainer = document.getElementById('answer-container');
 
-let shuffledQuestion = ""
-let currentQuestionIndex = ""
+let shuffledQuestion = "";
+let currentQuestionIndex = "";
 
 const questions = [{
         question: "Commonly used data types DO NOT include:",
@@ -26,45 +25,21 @@ const questions = [{
     }
 ];
 
+let count = 3
+    // questions.length * 10;
+
 const startQuiz = function() {
     console.log("quiz started")
     shuffledQuestion = questions.sort(() => Math.random() - 0.5)
     currentQuestionIndex = 0
     removeStartContainer();
     renderQuestion();
+    startTimer();
 };
 
 const removeStartContainer = function() {
     const startContainer = document.getElementById('start-container');
     startContainer.remove();
-};
-
-const constructAnswers = function(answers) {
-
-    const answerContainer = document.createElement('div');
-    answerContainer.setAttribute('class', 'answer-container');
-    answerContainer.setAttribute('id', 'answer-container');
-
-    answers.forEach(answer => {
-        const answerButton = document.createElement('button');
-        answerButton.setAttribute('class', 'btn');
-        answerButton.setAttribute('name', 'answer');
-        answerButton.textContent = answer;
-        answerContainer.appendChild(answerButton);
-    })
-
-    return answerContainer;
-};
-
-const verifyAnswer = function(event) {
-    // target is button being clicked
-    const target = event.target
-
-    if (target.getAttribute('name') === 'answer') {
-        currentQuestionIndex++
-        resetQuestion();
-        renderQuestion();
-    }
 };
 
 const constructNextQuestion = function(questions) {
@@ -86,9 +61,21 @@ const constructNextQuestion = function(questions) {
     return questionContainer;
 }
 
-const resetQuestion = function() {
-    const questionContainer = document.getElementById('question-container');
-    questionContainer.remove();
+const constructAnswers = function(answers) {
+
+    const answerContainer = document.createElement('div');
+    answerContainer.setAttribute('class', 'answer-container');
+    answerContainer.setAttribute('id', 'answer-container');
+
+    answers.forEach(answer => {
+        const answerButton = document.createElement('button');
+        answerButton.setAttribute('class', 'btn');
+        answerButton.setAttribute('name', 'answer');
+        answerButton.textContent = answer;
+        answerContainer.appendChild(answerButton);
+    })
+
+    return answerContainer;
 };
 
 const renderQuestion = function() {
@@ -99,6 +86,38 @@ const renderQuestion = function() {
 
     mainContainer.append(questionContainer);
 
+};
+
+const startTimer = function() {
+
+    const timerTick = function() {
+        console.log("tick")
+            // check if countdown has reached 0
+        if (count >= 0) {
+            document.getElementById('countdown').textContent = count--;
+        } else {
+            // render game-over
+            console.log('game over');
+            clearInterval(timer)
+        }
+    }
+    const timer = setInterval(timerTick, 1000)
+};
+
+const verifyAnswer = function(event) {
+    // target is button being clicked
+    const target = event.target
+
+    if (target.getAttribute('name') === 'answer') {
+        currentQuestionIndex++
+        resetQuestion();
+        renderQuestion();
+    }
+};
+
+const resetQuestion = function() {
+    const questionContainer = document.getElementById('question-container');
+    questionContainer.remove();
 };
 
 startBtn.addEventListener('click', startQuiz);
