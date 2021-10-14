@@ -104,10 +104,12 @@ body {
 }
 
 .score-form-container {
+    padding: 2rem 2rem;
     background-color: var(--clr-btn-color);
 }
 
-.score {
+.score,
+.game-over-text {
     color: var(--clr-btn-text);
     font-size: 1.3rem;
     margin: 0 0 1rem 0;
@@ -143,6 +145,12 @@ body {
     transition-duration: 0.2s;
     background-color: var(--clr-btn-hover);
     cursor: pointer;
+}
+
+.game-over-container {
+    background-color: var(--clr-btn-color);
+    margin: 2rem 2rem;
+    padding: 3rem 5rem;
 }
 
 @media screen and (max-width: 470px) {

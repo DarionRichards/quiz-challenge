@@ -118,14 +118,18 @@ const renderQuestion = function() {
 const startTimer = function() {
 
     const timerTick = function() {
-        if (count >= 0 && currentQuestionIndex < questions.length) {
-            document.getElementById('countdown').textContent = count--;
-        } else {
+        if (currentQuestionIndex >= questions.length) {
             clearInterval(timer)
             renderForm();
+        } else if (count < 0) {
+            clearInterval(timer);
+            removeQuestion();
+            renderGameOver();
+        } else {
+            document.getElementById('countdown').textContent = count--;
         }
     }
-    const timer = setInterval(timerTick, 1000)
+    const timer = setInterval(timerTick, 1000);
 };
 
 const verifyAnswer = function(event) {
@@ -138,20 +142,19 @@ const verifyAnswer = function(event) {
         const userOption = target.getAttribute('data-option');
         const correctOption = currentTarget.getAttribute('data-answer');
 
-        if (userOption !== correctOption) {
-            constructWrongAlert();
-            count -= 5;
-
-        } else {
+        if (userOption === correctOption) {
             constructCorrectAlert();
+        } else {
+            count -= 5;
+            constructWrongAlert();
         };
         currentQuestionIndex++;
-        resetQuestion();
+        removeQuestion();
         renderQuestion();
     }
 };
 
-const resetQuestion = function() {
+const removeQuestion = function() {
     const questionContainer = document.getElementById('question-container');
     questionContainer.remove();
 };
@@ -166,7 +169,7 @@ const constructForm = function() {
 
     const formHeader = document.createElement('h2');
     formHeader.setAttribute('class', 'score');
-    formHeader.textContent = `Your score is: `;
+    formHeader.textContent = "Your score is: " + count;
 
     const formContainer = document.createElement('div');
     formContainer.setAttribute('class', 'form-container');
@@ -200,6 +203,30 @@ const renderForm = function() {
 
     const form = constructForm();
     mainContainer.append(form);
+};
+
+const constructGameOver = function() {
+    const gameOverContainer = document.createElement('section');
+    gameOverContainer.setAttribute('class', 'centre-text game-over-container');
+
+    const gameOverHeader = document.createElement('h2');
+    gameOverHeader.setAttribute('class', 'game-over-text');
+    gameOverHeader.textContent = "Game Over!";
+
+    gameOverContainer.append(gameOverHeader);
+
+    return gameOverContainer;
+};
+
+const renderGameOver = function() {
+
+    const gameOver = constructGameOver();
+    mainContainer.append(gameOver);
+};
+
+const gameOver = function() {
+
+    console.log("game over");
 };
 
 startBtn.addEventListener('click', startQuiz);
