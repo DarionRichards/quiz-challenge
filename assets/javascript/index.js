@@ -28,10 +28,19 @@ const questions = [{
 
 let count = questions.length * 7;
 
+const initialiseLocalStorage = function() {
+    const dataFromLS = JSON.parse(localStorage.getItem('highscores'));
+
+    if (!dataFromLS) {
+        localStorage.setItem('highscores', JSON.stringify([]));
+    }
+
+};
+
 const startQuiz = function() {
-    console.log("quiz started")
-    shuffledQuestion = questions.sort(() => Math.random() - 0.5)
-    currentQuestionIndex = 0
+    initialiseLocalStorage();
+    shuffledQuestion = questions.sort(() => Math.random() - 0.5);
+    currentQuestionIndex = 0;
     removeStartContainer();
     renderQuestion();
     startTimer();
@@ -179,6 +188,7 @@ const constructForm = function() {
 
     const formInput = document.createElement('input');
     formInput.setAttribute('class', 'centre-text');
+    formInput.setAttribute('id', 'user-initials');
     formInput.setAttribute('placeholder', 'Enter your initials!');
 
     const formButtonItem = document.createElement('div');
@@ -195,6 +205,8 @@ const constructForm = function() {
     formContainer.append(formInputItem, formButtonItem);
     formInputItem.append(formInput);
     formButtonItem.append(formButton);
+
+    formButton.addEventListener('click', storeScore);
 
     return formSection;
 };
@@ -224,9 +236,33 @@ const renderGameOver = function() {
     mainContainer.append(gameOver);
 };
 
-const gameOver = function() {
+const getFromLocalStorage = function(key, defaultValue) {
+    const localStorageData = JSON.parse(localStorage.getItem(key));
 
-    console.log("game over");
+    if (!localStorageData) {
+        return defaultValue;
+    } else {
+        return localStorageData;
+    }
+};
+
+const storeScore = function() {
+
+    console.log('store')
+    const score = count;
+
+    const initials = document.getElementById('user-initials').value;
+
+    const scoreObj = {
+        score: score,
+        initials: initials
+
+    };
+
+    const highscores = getFromLocalStorage('highscores', []);
+    highscores.push(scoreObj);
+
+    localStorage.setItem('highscores', JSON.stringify(highscores));
 };
 
 startBtn.addEventListener('click', startQuiz);
