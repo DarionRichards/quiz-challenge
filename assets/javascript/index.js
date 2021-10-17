@@ -248,7 +248,6 @@ const getFromLocalStorage = function(key, defaultValue) {
 
 const storeScore = function() {
 
-    console.log('store')
     const score = count;
 
     const initials = document.getElementById('user-initials').value;
