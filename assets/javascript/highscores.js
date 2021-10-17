@@ -1,6 +1,4 @@
-// construct elements
-// add event listener to clear-btn
-// remove elements constructed
+const clearBtn = document.getElementById('clear-btn');
 
 const getFromLocalStorage = (key, defaultValue) => {
 
@@ -25,6 +23,7 @@ const constructHighscores = (highscores) => {
 
         const liElement = document.createElement('li');
         liElement.setAttribute('class', 'result-container');
+        liElement.setAttribute('id', 'result');
 
         const initials = document.createElement('div');
         initials.innerText = highscore.initials
@@ -46,6 +45,13 @@ const onLoad = () => {
     constructHighscores(highscores);
 };
 
+const removeHighscores = () => {
 
+    localStorage.removeItem('highscores')
 
+    const liElement = document.getElementById('result');
+    liElement.remove()
+};
+
+clearBtn.addEventListener('click', removeHighscores);
 window.addEventListener('load', onLoad);
